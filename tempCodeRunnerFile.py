@@ -1,0 +1,1 @@
+ encoded_image_data = base64.b64encode(row[11].encode('utf-8'))

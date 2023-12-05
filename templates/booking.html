@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% block title %} Menu Utama {% endblock %}
+
+
+{% block content %} 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Booking Page</li>
+    </ol>
+  </nav>
+  
+<!-- start booking kamar -->
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Form starts here -->
+        <form action="/submit-booking" method="post" class="row">
+          <input type="hidden" name="user_id" value="{{ user_id }}">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    <label for="nama" class="form-label">Nama Pemesan</label>
+                    <input type="text" class="form-control" id="nama" placeholder="Masukkan Nama Anda" name="nama" autocomplete="off" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email Anda" name="email" autocomplete="off" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">No. Handphone</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Nomor HP Anda" name="phone" autocomplete="off" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ket" class="form-label">Keterangan</label>
+                    <textarea class="form-control" id="ket" rows="3" name="ket"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    <label for="tipe" class="form-label">Type Kamar</label>
+                    <select class="form-select" aria-label="Default select example" name="tipe" id="roomType">
+                      <option value="" data-price="0">Select Room Type</option>
+                      <option value="Standard Room" data-price="280000.00">Standard Room</option>
+                      <option value="Twin Room" data-price="355000.00">Twin Room</option>
+                      <option value="Family Room" data-price="450000.00">Family Room</option>
+                      <option value="Single Room" data-price="220000.00">Single Room</option>
+                  </select>
+                  
+                </div>
+                <div class="mb-3">
+                    <label for="checkin" class="form-label">Tanggal Check In</label>
+                    <input type="date" class="form-control" id="checkin" name="checkin" required>
+                </div>
+                <div class="mb-3">
+                    <label for="checkout" class="form-label">Tanggal Check Out</label>
+                    <input type="date" class="form-control" id="checkout" name="checkout" required>
+                </div>
+                <div class="mb-3">
+                    <label for="roomQuantity" class="form-label">Jumlah Kamar</label>
+                    <input type="number" min="1" class="form-control" id="roomQuantity" name="roomQuantity" required>
+                </div>
+                <div id="bookingPrice" class="mb-3">
+                  <label for="bookingPriceLabel" class="form-label">Total Booking Price:</label>
+                  <input type="text" class="form-control" id="bookingPriceLabel" name="bookingPrice" value="0" readonly>
+              </div>
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-success btn-lg btn-block" style="background-color: #749BC2;" onclick="confirm('Anda Yakin')">Konfirmasi Pemesanan</button>
+              </div>
+              
+            </div>
+            
+            <script type="text/javascript">
+              $(document).ready(function() {
+                  $('#roomType').change(function() {
+                      calculateBookingPrice();
+                  });
+
+                  $('#roomQuantity').change(function() {
+                      calculateBookingPrice();
+                  });
+
+                  $('#checkin, #checkout').change(function() {
+                      calculateBookingPrice();
+                  });
+
+                  function calculateBookingPrice() {
+                      var selectedRoomType = $('#roomType').val();
+                      var roomPrice = parseInt($('#roomType option:selected').data('price'));
+                      var roomQuantity = parseInt($('#roomQuantity').val());
+                      var checkinDate = new Date($('#checkin').val());
+                      var checkoutDate = new Date($('#checkout').val());
+
+                      if (checkinDate > checkoutDate) {
+                          alert('Invalid check-in and check-out dates');
+                          return;
+                      }
+
+                      var numberOfNights = Math.floor((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+                      var totalBookingPrice = roomPrice * roomQuantity * numberOfNights;
+
+                      $('#bookingPriceLabel').val('Rp ' + totalBookingPrice);
+                  }
+              });
+              </script>
+        </form>
+        <!-- Form ends here -->
+    </div>
+</div>
+</div>
+      <!-- end Form Pemesanan Kamar -->
+
+  </div>
+</div>
+<!-- end booking kamar -->
+
+  <!-- Remove the container if you want to extend the Footer to full width. -->
+<section id="footer" class="'footer">
+    <!-- Footer -->
+    <footer
+            class="text-center text-lg-start text-white"
+            style="background-color: #272829;"
+            >
+      <!-- Section: Social media -->
+      <section
+               class="d-flex justify-content-between p-4"
+               style="background-color: #F0F8FF;"
+               >
+        <!-- Left -->
+        <div class="me-5">
+          <span>Get connected with us on social networks:</span>
+        </div>
+        <!-- Left -->
+  
+        <!-- Right -->
+        <div>
+          <a href="" class="text-white me-4">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="" class="text-white me-4">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="" class="text-white me-4">
+            <i class="fab fa-google"></i>
+          </a>
+          <a href="" class="text-white me-4">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="" class="text-white me-4">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="" class="text-white me-4">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+        <!-- Right -->
+      </section>
+      <!-- Section: Social media -->
+  
+      <!-- Section: Links  -->
+        <div class="container text-center text-md-start mt-5">
+          <!-- Grid row -->
+          <div class="row mt-3">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+              <!-- Content -->
+              <img src="{{ url_for('static', filename='img/l1.png') }}" alt="Company Logo" class="img-fluid" width="200" height="200">
+              
+              <p>
+                SAHASI telah berdiri dan melayani sejak tahun 2004, merupakan hotel terkenal yang berkualitas dengan harga yang dapat dijangkau bagi semua kalangan.
+              </p>
+            </div>
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold">LINKS</h6>
+              <hr
+                  class="mb-4 mt-0 d-inline-block mx-auto"
+                  style="width: 60px; background-color: #91C8E4; height: 2px"
+                  />
+              <p>
+                <a href="#home" class="text-white">Home</a>
+              </p>
+              <p>
+                <a href="#rooms" class="text-white">Rooms</a>
+              </p>
+              <p>
+                <a href="#fasilitas" class="text-white">Facilities</a>
+              </p>
+              <p>
+                <a href="#peoplesays" class="text-white">People Says</a>
+              </p>
+            </div>
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold">SOSIAL MEDIA</h6>
+              <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #91C8E4; height: 2px">
+              <div>
+                  <a href="https://g.co/kgs/QDEKGx" target="_blank" style="text-decoration: none; color: white;">
+                      <img src="{{ url_for('static', filename='img/s1.png') }}"  width="40" height="40">@Sahasi Hotel
+                  </a>
+                </div>
+  
+                  <div>
+                  <a href="https://g.co/kgs/QDEKGx" target="_blank" style="text-decoration: none; color: white;">
+                    <img src="{{ url_for('static', filename='img/m2.png') }}"  width="40" height="40">@Sahasihotel_
+                </a>
+              </div>
+              <div>
+                <a href="https://g.co/kgs/QDEKGx" target="_blank" style="text-decoration: none; color: white;">
+                  <img src="{{ url_for('static', filename='img/m3.png') }}"  width="30" height="25"> @SahasiHotel
+              </a>
+            </div>
+  
+            <div>
+              <a href="https://g.co/kgs/QDEKGx" target="_blank" style="text-decoration: none; color: white;">
+                <img src="{{ url_for('static', filename='img/m4.png') }}"  width="40" height="40"> @ofc_SahasiHotel
+            </a>
+          </div>
+          </div>
+          
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold">Contact</h6>
+              <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #91C8E4; height: 2px" />
+          
+              <!-- Grid column untuk WhatsApp -->
+              <div>
+                  <a href="https://wa.me/62895328870832?text=Halo%20Sahasi,%20Aku%20mau%20tanya%20nih..." style="text-decoration: none; color: white;">
+                      <img src="{{ url_for('static', filename='img/l2.png') }}" alt="WhatsApp" width="40" height="30"> +(62)895-3288-70832
+                  </a>
+              </div>    
+      <script>
+          function sendEmail() {
+              var subject = "Pesan untuk Sahasi";
+              var body = "Hallo, tampaknya aku ada beberapa pertanyaan! Berikut daftar pertanyaanku:\n1. ............................ \n2. ............................  \n3.  ";
+              var mailtoLink = "mailto:aurisatugas@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+              
+              window.location.href = mailtoLink;
+          }
+      </script>
+              <div>
+              <a onclick="sendEmail()">
+                <img src="{{ url_for('static', filename='img/l3.png') }}" alt="Email" width="40" height="35"> sahasi@gmail.com</a>
+              </div> 
+  
+              <div>
+                <a href="tel:02130007000" style="text-decoration: none; color: white;" >
+                    <img src="{{ url_for('static', filename='img/l4.png') }}" alt="WhatsApp" width="30" height="40"> 021-3000-7000
+                </a>
+            </div> 
+  
+            <div>
+              <a href="https://g.co/kgs/QDEKGx" target="_blank" style="text-decoration: none; color: white;" >
+                  <img src="{{ url_for('static', filename='img/l5.png') }}" alt="WhatsApp" width="30" height="40"> Jakarta, Indonesia -12510
+              </a>
+          </div> 
+          </div>
+          <!-- Grid row -->
+        </div>
+      </section>
+      <!-- Section: Links  -->
+  
+      <!-- Copyright -->
+      <div
+           class="text-center p-3"
+           style="background-color: rgba(0, 0, 0, 0.2)"
+           >
+        © 2023 Copyright:
+        <a class="text-white" 
+           >SahasiHotel</a
+          >
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+  
+  </div>
+  <!-- End of .container -->
+  </section>
+{% endblock %}

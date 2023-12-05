@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+    <title>My App - {% block title %} {% endblock %}</title>
+    <style>
+      .navbar {
+        background-color: #000080;
+      }
+      .availability-form {
+        margin-top: -50px;
+        z-index: 2;
+        position: relative;
+      }
+      @media screen and (max-width: 575px) {
+        .availability-form {
+          margin-top: 25px;
+          padding: 0 35px;
+        }
+      }
+      #home {
+        margin: 0;
+        padding: 0;
+      }
+      #carouselExampleCaptions {
+        margin: 0;
+      }
+      .carousel-inner {
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-light px-lg-3 py-lg-2 shadow-sm sticky-top" style="background-color: #000080;">
+      <div class="container-fluid">
+        <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="{{ url_for('home') }}">SAHASI</a>
+        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-2" href="#kamar">Rooms</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-2" href="{{ url_for('booking') }}">Booking</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-2" href="#">About</a>
+            {% if username %}
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-2" href="{{ url_for('history') }}">Booking History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-2" href="#">Hello {{ username }}!</a>
+            </li>
+            {% endif %}
+
+          </ul>
+          <div class="d-flex" role="search">
+            <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal" data-bs-target="#loginModel">Login</button>
+            <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal" data-bs-target="#registerModel">Register</button>
+            <a class="btn btn-outline-dark shadow-none me-lg-3 me-2" href="/logoutuser">Logout</a>
+
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="modal fade" id="loginModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Start Login Form -->
+          <form action="{{ url_for('userlogin')}}" method="post">
+            <div class="modal-header">
+              <h5 class="modal-title d-flex align-items-center">
+                <i class="bi bi-person-circle fs-3 me-2"></i>User Login
+              </h5>
+              <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="email" class="form-label">Username</label>
+                <input type="text" class="form-control shadow-none" id="username" name="username">
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control shadow-none" id="password" name="password">
+              </div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <button type="submit" class="btn btn-dark shadow-none">LOGIN</button>
+              </div>
+            </div>
+          </form><!-- end Login Form -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="registerModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Start Login Form -->
+          <form action="{{ url_for('userregister')}}" method="post">
+            <div class="modal-header">
+              <h5 class="modal-title d-flex align-items-center">
+                <i class="bi bi-person-circle fs-3 me-2"></i>User Register
+              </h5>
+              <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control shadow-none" id="username" name="username">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control shadow-none" id="email" name="email">
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="text" class="form-control shadow-none" id="phone" name="phone">
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control shadow-none" id="password" name="password">
+              </div>
+              <div class="mb-4">
+                <label for="confirmpassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control shadow-none" id="confirmpassword" name="confirmpassword">
+              </div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <button type="submit" class="btn btn-dark shadow-none">Register</button>
+              </div>
+            </div>
+          </form><!-- end Login Form -->
+        </div>
+      </div>
+    </div>
+
+  {% block content %}
+  {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

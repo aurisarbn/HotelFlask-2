@@ -1,0 +1,33 @@
+<!-- Modal -->
+<div class="modal fade" id="detailModal{{row[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detail Pesanan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h2>Customer ID : {{ row[0] }}</h2>
+          <hr>
+          <pre>
+         Nama Customer  : {{ row [2] }}
+         Email          : {{ row [3] }}
+         Phone          : {{ row [4] }}
+         Tipe Kamar     : {{ row [5] }}
+         Tgl. Checkin   : {{ row [6] }}
+         Tgl. Checkout  : {{ row [7] }}
+         Jumlah Kamar   : {{ row [8] }}
+         Keterangan     : {{ row [9] }}
+         Pembayaran     : {{ row [10] }}
+         Status         : {{ row [12] }}
+        </pre>
+        {% if row[11] %}
+        <img src="{{ row[11] }}" alt="Customer Image" width="100%">
+
+  {% endif %}
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>

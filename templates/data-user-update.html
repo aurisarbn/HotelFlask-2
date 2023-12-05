@@ -1,0 +1,39 @@
+<!-- Modal -->
+<div class="modal fade" id="updateModal{{row[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Data Update</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <div class="container">
+             <div class="row">
+                <div class="col">
+                    <form action="{{ url_for('userupdate')}}" method="post">
+                    <div class="mb-3">          
+                      <label for="nama" class="form-label">Username</label>
+                      <input type="hidden" class="form-control" id="id" name="id" value="{{ row[0] }}">
+                      <input type="text" class="form-control" id="username" placeholder="Masukkan Username Anda" name="username" value="{{ row[1] }}" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="email" placeholder="Email Anda" name="email" value="{{ row[3] }}" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">No. Handphone</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Nomor HP Anda" name="phone" value="{{ row[4] }}"autocomplete="off" required>
+                      </div>
+                  </div>
+          
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" onclick="confirm('Anda Yakin');">UPDATE</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
